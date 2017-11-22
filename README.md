@@ -5,4 +5,3 @@ For additional information and documentation on Passport refer to [https://www.i
 
 Refer to the Passport API documentation to for request and response formats. 
 * https://www.inversoft.com/docs/passport/1.x/tech/apis/
-
