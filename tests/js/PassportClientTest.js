@@ -24,13 +24,24 @@ buster.testCase('Applications', {
     this.client = new PassportClient('78d8f1aa-e7dc-4efc-9755-e053af05c8e2', 'https://demo-passport.inversoft.io');
   },
 
-  'retrieve_applications': function(done) {
+  'retrieveApplications': function(done) {
     this.client.retrieveApplications(done(function(response) {
       assert.equals(response.statusCode, 200);
       assert.defined(response.successResponse);
 
       if (response.successResponse) {
         assert.isTrue(response.successResponse.applications.length > 0);
+      }
+    }));
+  },
+
+  'retrievePassportApplication': function(done) {
+    this.client.retrieveApplication('3c219e58-ed0e-4b18-ad48-f4f92793ae32', done(function(response) {
+      assert.equals(response.statusCode, 200);
+      assert.defined(response.successResponse);
+
+      if (response.successResponse) {
+        assert.equals(response.successResponse.application.name, 'Passport');
       }
     }));
   }
