@@ -18,7 +18,7 @@
 
 var assert = buster.assertions.assert;
 
-buster.testCase('Applications', {
+buster.testCase('PassportClient', {
 
   setUp: function() {
     this.client = new PassportClient('78d8f1aa-e7dc-4efc-9755-e053af05c8e2', 'https://demo-passport.inversoft.io');
@@ -42,6 +42,28 @@ buster.testCase('Applications', {
 
       if (response.successResponse) {
         assert.equals(response.successResponse.application.name, 'Passport');
+      }
+    }));
+  },
+
+  'retrieveAdminUser': function(done) {
+    this.client.retrieveUserByEmail('admin@inversoft.com', done(function(response) {
+      assert.equals(response.statusCode, 200);
+      assert.defined(response.successResponse);
+
+      if (response.successResponse) {
+        assert.equals(response.successResponse.user.email, 'admin@inversoft.com');
+      }
+    }));
+  },
+
+  'retrieveSystemConfiguration': function(done) {
+    this.client.retrieveSystemConfiguration(done(function(response) {
+      assert.equals(response.statusCode, 200);
+      assert.defined(response.successResponse);
+
+      if (response.successResponse) {
+        assert.isTrue(response.successResponse.systemConfiguration.minimumPasswordAge.seconds > 0);
       }
     }));
   }
