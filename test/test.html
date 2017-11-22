@@ -1,0 +1,38 @@
+<!--
+  ~ Copyright (c) 2017, Inversoft Inc., All Rights Reserved
+  -->
+<html>
+
+
+<head>
+  <script src="../lib/ClientResponse.js"></script>
+  <script src="../lib/RESTClient.js"></script>
+  <script src="../PassportClient.js"></script>
+  <style>
+    div {
+      font-family: "Courier New", monospace;
+      white-space: pre;
+      color: #000;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Retrieve Applications</h1>
+  <div id="status"></div>
+  <div id="output"></div>
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var client = new PassportClient('78d8f1aa-e7dc-4efc-9755-e053af05c8e2', 'https://demo-passport.inversoft.io');
+      client.retrieveApplications(function(response) {
+        var status = document.getElementById('status');
+        var output = document.getElementById('output');
+        status.innerHTML = response.statusCode;
+        output.innerHTML = JSON.stringify(response.successResponse, null, '  ');
+      });
+    }, false);
+  </script>
+</body>
+</html>
