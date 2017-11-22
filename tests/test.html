@@ -1,62 +1,20 @@
-<!--
-  ~ Copyright (c) 2017, Inversoft Inc., All Rights Reserved
-  -->
 <html>
 
-
 <head>
-  <style>
-    .test {
-      margin-bottom: 20px;
-    }
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Passport Client Tests</title>
 
-    .error {
-      background-color: red;
-    }
-
-    .output {
-      max-height: 500px;
-      overflow-y: scroll;
-
-      font-family: "Courier New", monospace;
-      white-space: pre;
-      color: #000;
-      font-size: 12px;
-    }
-  </style>
-</head>
-<body>
-  <div>
-    <h1>Applications</h1>
-    <div class="test retrieveApplications">
-      <div class="status"></div>
-      <div class="output"></div>
-    </div>
-  </div>
-  <h2>Retrieve Applications</h2>
-  <div id="status"></div>
-  <div id="output"></div>
   <script src="../lib/ClientResponse.js"></script>
   <script src="../lib/RESTClient.js"></script>
   <script src="../lib/PassportClient.js"></script>
-  <script>
+  <script type="text/javascript" src="./js/buster-test-1.6.2.js"></script>
 
-    document.addEventListener('DOMContentLoaded', function() {
-      var client = new PassportClient('78d8f1aa-e7dc-4efc-9755-e053af05c8e2', 'https://demo-passport.inversoft.io');
+  <!-- Tests -->
+  <script type="text/javascript" src="./js/PassportClientTest.js"></script>
 
+  <link rel="stylesheet" type="text/css" media="all" href="./css/buster-test-1.6.2.css">
 
-      // Retrieve All Applications
-      client.retrieveApplications(function(response) {
-        var test = document.querySelector('.retrieveApplications');
-        var status = test.querySelector('.status');
-        var output = test.querySelector('.output');
-        status.innerHTML = response.statusCode;
-        if (response.statusCode !== 200) {
-          status.className += ' error';
-        }
-        output.innerHTML = JSON.stringify(response.successResponse, null, '  ');
-      });
-    }, false);
-  </script>
+</head>
+<body>
 </body>
 </html>
