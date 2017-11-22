@@ -5,31 +5,55 @@
 
 
 <head>
-  <script src="../lib/ClientResponse.js"></script>
-  <script src="../lib/RESTClient.js"></script>
-  <script src="../PassportClient.js"></script>
   <style>
-    div {
+    .test {
+      margin-bottom: 20px;
+    }
+
+    .error {
+      background-color: red;
+    }
+
+    .output {
+      max-height: 500px;
+      overflow-y: scroll;
+
       font-family: "Courier New", monospace;
       white-space: pre;
       color: #000;
       font-size: 12px;
-      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <h1>Retrieve Applications</h1>
+  <div>
+    <h1>Applications</h1>
+    <div class="test retrieveApplications">
+      <div class="status"></div>
+      <div class="output"></div>
+    </div>
+  </div>
+  <h2>Retrieve Applications</h2>
   <div id="status"></div>
   <div id="output"></div>
+  <script src="../lib/ClientResponse.js"></script>
+  <script src="../lib/RESTClient.js"></script>
+  <script src="../lib/PassportClient.js"></script>
   <script>
 
     document.addEventListener('DOMContentLoaded', function() {
       var client = new PassportClient('78d8f1aa-e7dc-4efc-9755-e053af05c8e2', 'https://demo-passport.inversoft.io');
+
+
+      // Retrieve All Applications
       client.retrieveApplications(function(response) {
-        var status = document.getElementById('status');
-        var output = document.getElementById('output');
+        var test = document.querySelector('.retrieveApplications');
+        var status = test.querySelector('.status');
+        var output = test.querySelector('.output');
         status.innerHTML = response.statusCode;
+        if (response.statusCode !== 200) {
+          status.className += ' error';
+        }
         output.innerHTML = JSON.stringify(response.successResponse, null, '  ');
       });
     }, false);
