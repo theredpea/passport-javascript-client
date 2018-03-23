@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, Inversoft Inc., All Rights Reserved
+ * Copyright (c) 2017-2018, Inversoft Inc., All Rights Reserved
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,10 +21,10 @@ var assert = buster.assertions.assert;
 buster.testCase('PassportClient', {
 
   setUp: function() {
-    this.client = new PassportClient('78d8f1aa-e7dc-4efc-9755-e053af05c8e2', 'https://demo-passport.inversoft.io');
+    this.client = new PassportClient('bf69486b-4733-4470-a592-f1bfce7af580', 'http://localhost:9011');
   },
 
-  'retrieveApplications': function(done) {
+  'retrieveApplicationsTest': function(done) {
     this.client.retrieveApplications(done(function(response) {
       assert.equals(response.statusCode, 200);
       assert.defined(response.successResponse);
@@ -35,7 +35,7 @@ buster.testCase('PassportClient', {
     }));
   },
 
-  'retrievePassportApplication': function(done) {
+  'retrievePassportApplicationTest': function(done) {
     this.client.retrieveApplication('3c219e58-ed0e-4b18-ad48-f4f92793ae32', done(function(response) {
       assert.equals(response.statusCode, 200);
       assert.defined(response.successResponse);
@@ -46,7 +46,7 @@ buster.testCase('PassportClient', {
     }));
   },
 
-  'retrieveAdminUser': function(done) {
+  'retrieveAdminUserTest': function(done) {
     this.client.retrieveUserByEmail('admin@inversoft.com', done(function(response) {
       assert.equals(response.statusCode, 200);
       assert.defined(response.successResponse);
@@ -57,7 +57,7 @@ buster.testCase('PassportClient', {
     }));
   },
 
-  'retrieveSystemConfiguration': function(done) {
+  'retrieveSystemConfigurationTest': function(done) {
     this.client.retrieveSystemConfiguration(done(function(response) {
       assert.equals(response.statusCode, 200);
       assert.defined(response.successResponse);
@@ -66,5 +66,32 @@ buster.testCase('PassportClient', {
         assert.isTrue(response.successResponse.systemConfiguration.minimumPasswordAge.seconds > 0);
       }
     }));
+  },
+
+  'createUserTest': function(done) {
+    var uuid = function() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }();
+
+    this.client.createUser(uuid, {
+      'user': {
+        'email': uuid + '@inversoft.com',
+        'password': 'foobarbaz'
+      }
+    }, done(function(response) {
+      assert.equals(response.statusCode, 200);
+      assert.defined(response.successResponse);
+
+      if (response.successResponse) {
+        assert.isTrue(response.successResponse.user.email === uuid + '@inversoft.com');
+      }
+    }));
+
+    this.client.deleteUser(uuid, function(response) {
+
+    });
   }
 });
