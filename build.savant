@@ -3,7 +3,7 @@
  */
 savantVersion = "1.0.0"
 
-project(group: "com.inversoft.passport", name: "passport-javascript-client", version: "1.21.5", licenses: ["ApacheV2_0"]) {
+project(group: "com.inversoft.passport", name: "passport-javascript-client",version: "1.22.0", licenses: ["ApacheV2_0"]) {
   workflow {
     standard()
   }
@@ -21,7 +21,7 @@ project(group: "com.inversoft.passport", name: "passport-javascript-client", ver
 
 // Plugins
 file = loadPlugin(id: "org.savantbuild.plugin:file:${savantVersion}")
-idea = loadPlugin(id: "org.savantbuild.plugin:idea:${savantVersion}")
+idea = loadPlugin(id: "org.savantbuild.plugin:idea:1.0.1")
 release = loadPlugin(id: "org.savantbuild.plugin:release-git:${savantVersion}")
 
 target(name: "clean", description: "Cleans build directory") {
